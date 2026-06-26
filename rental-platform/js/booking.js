@@ -150,7 +150,7 @@ function handleBookingSubmit(e) {
     }, 1500);
 }
 // ==================== Show Payment Modal ====================
-function showPaymentModal(booking) {
+function showpaymentModal(booking) {
     const paymentModal = document.createElement('div');
     paymentModal.className = 'payment-modal';
     paymentModal.innerHTML = `
@@ -208,11 +208,22 @@ function showPaymentModal(booking) {
         display: block;
     `;
 
-    const paymentButton = paymentModal.querySelector('#confirmPayment');
-    paymentButton.style.cssText = `
-        margin-top: 1.5rem;
-        width: 100%;
-    `;
+   paymentButton.addEventListener('click', () => {
+
+    const isMobile =
+        /Android|iPhone|iPad|iPod/i.test(
+            navigator.userAgent
+        );
+
+    if (isMobile) {
+        window.location.href = "abamobile://";
+    } else {
+        alert(
+            "ABA Mobile App can only be opened on a mobile phone."
+        );
+    }
+
+});
 
     document.body.appendChild(paymentModal);
 
