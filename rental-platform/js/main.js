@@ -5,6 +5,11 @@ const priceSlider = document.querySelector('.price-slider');
 const priceValue = document.getElementById('price-value');
 const checkInInput = document.getElementById('check-in');
 const checkOutInput = document.getElementById('check-out');
+const assetTypeInput = document.getElementById('asset-type');
+const locationInput = document.getElementById('location');
+const searchButton = document.querySelector('.btn-search');
+const searchResultsGrid = document.getElementById('search-results-grid');
+const noSearchResults = document.getElementById('no-search-results');
 const navLinks = document.querySelectorAll('.nav-link');
 const viewButtons = document.querySelectorAll('.view-btn');
 const favoriteButtons = document.querySelectorAll('.btn-favorite');
@@ -41,6 +46,11 @@ function setupEventListeners() {
         viewButtons.forEach(btn => {
             btn.addEventListener('click', handleViewToggle);
         });
+    }
+
+    // Search button
+    if (searchButton) {
+        searchButton.addEventListener('click', handleSearch);
     }
 
     // Favorite buttons
@@ -136,6 +146,137 @@ function handleFavorite(e) {
         e.currentTarget.style.color = '#6b7280';
         showNotification('Removed from favorites', 'info');
     }
+}
+
+function handleSearch(e) {
+    if (e) e.preventDefault();
+
+    const selectedType = assetTypeInput ? assetTypeInput.value.trim() : 'All Types';
+    const locationQuery = locationInput ? locationInput.value.trim().toLowerCase() : '';
+
+    const filteredAssets = rentalAssets.filter(asset => {
+        const matchesType = selectedType === 'All Types' || asset.type === selectedType;
+        const matchesLocation = !locationQuery || asset.location.toLowerCase().includes(locationQuery);
+        return matchesType && matchesLocation;
+    });
+
+    renderSearchResults(filteredAssets);
+}
+
+function renderSearchResults(assets) {
+    if (!searchResultsGrid) return;
+
+    searchResultsGrid.innerHTML = '';
+
+    if (!assets.length) {
+        noSearchResults.style.display = 'block';
+        return;
+    }
+
+    noSearchResults.style.display = 'none';
+
+    assets.forEach(asset => {
+        const card = document.createElement('div');
+        card.className = 'asset-card fade-in-up';
+        card.innerHTML = `
+            <div class="asset-image-wrapper">
+                <div class="asset-image ${asset.imageClass}"></div>
+                <span class="asset-badge">${asset.badge}</span>
+                <button class="btn-favorite">
+                    <i class="far fa-heart"></i>
+                </button>
+            </div>
+            <div class="asset-content">
+                <div class="asset-rating">
+                    ${' <i class="fas fa-star"></i>'.repeat(asset.rating)}
+                    <span>(${asset.reviews} reviews)</span>
+                </div>
+                <h3>${asset.title}</h3>
+                <p class="asset-location">
+                    <i class="fas fa-map-marker-alt"></i> ${asset.location}
+                </p>
+                <div class="asset-condition">
+                    <span class="condition-badge ${asset.conditionClass}">${asset.condition}</span>
+                </div>
+                <p class="asset-description">${asset.description}</p>
+                <div class="asset-features">
+                    ${asset.features.map(feature => `<span><i class="fas fa-circle"></i> ${feature}</span>`).join('')}
+                </div>
+                <div class="asset-footer">
+                    <div class="asset-price">
+                        <span class="price">${asset.price}</span>
+                        <span class="period">/day</span>
+                    </div>
+                    <a href="pages/booking.html" class="btn btn-primary btn-small">Book Now</a>
+                </div>
+            </div>
+        `;
+        searchResultsGrid.appendChild(card);
+    });
+}
+
+const rentalAssets = [
+    {
+        title: '2024 Tesla Model 3',
+        type: 'Vehicles',
+        location: 'San Francisco, CA',
+        price: '$95',
+        rating: 5,
+        reviews: 245,
+        badge: 'Popular',
+        condition: 'Excellent',
+        conditionClass: 'excellent',
+        description: 'Luxury electric car, fully charged, clean interior.',
+        features: ['5 seats', 'Auto', 'GPS Navigation'],
+        imageClass: 'car-image'
+    },
+    {
+        title: 'Mountain Bike Pro',
+        type: 'Equipment',
+        location: 'San Francisco, CA',
+        price: '$25',
+        rating: 4,
+        reviews: 89,
+        badge: 'New',
+        condition: 'Excellent',
+        conditionClass: 'excellent',
+        description: 'High-end mountain bike with full suspension and disc brakes.',
+        features: ['27.5" Wheels', '21 Speed', 'Helmet Included'],
+        imageClass: 'bike-image'
+    },
+    {
+        title: 'Luxury City Apartment',
+        type: 'Property',
+        location: 'New York, NY',
+        price: '$120',
+        rating: 5,
+        reviews: 120,
+        badge: 'Featured',
+        condition: 'Great',
+        conditionClass: 'great',
+        description: 'Modern apartment near central park with premium amenities.',
+        features: ['2 beds', 'Wi-Fi', 'Kitchen'],
+        imageClass: 'property-image'
+    },
+    {
+        title: 'Conference Hall Suite',
+        type: 'Event Spaces',
+        location: 'Los Angeles, CA',
+        price: '$220',
+        rating: 4,
+        reviews: 64,
+        badge: 'Premium',
+        condition: 'Excellent',
+        conditionClass: 'excellent',
+        description: 'Spacious event hall with AV setup and catering options.',
+        features: ['200 guests', 'Projector', 'Stage'],
+        imageClass: 'event-space-image'
+    }
+];
+
+// Render all assets by default in search results
+if (searchResultsGrid) {
+    renderSearchResults(rentalAssets);
 }
 
 // ==================== Notifications ==================== 

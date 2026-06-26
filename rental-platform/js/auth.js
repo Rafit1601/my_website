@@ -105,10 +105,13 @@ function updateAuthNav() {
 
     const currentUser = getCurrentUser();
     if (currentUser) {
+        const profileUrl = `${authBasePath}profile.html`;
         navAuth.innerHTML = `
             <span class="nav-user">Hi, ${currentUser.fullName || currentUser.username}</span>
+            <a href="${profileUrl}" class="btn btn-secondary btn-small">Profile</a>
             <button id="logout-button" class="btn btn-secondary">Logout</button>
         `;
+
         const logoutButton = document.getElementById('logout-button');
         if (logoutButton) {
             logoutButton.addEventListener('click', () => {

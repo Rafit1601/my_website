@@ -3,6 +3,7 @@
 .auth-page.style2 {
     min-height: calc(100vh - 80px);
     display: flex;
+    font-size: 16px;
     align-items: center;
     justify-content: center;
     padding: 3rem 1rem;
@@ -91,7 +92,7 @@
     content: '';
     position: absolute;
     inset: 4px;
-    background: linear-gradient(135deg, #6366f1, #ec4899);
+    background: linear-gradient(135deg, #6366f1, #fb3799);
     border-radius: 999px;
     z-index: -1;
     box-shadow: 0 15px 40px rgba(99, 102, 241, 0.18);
@@ -191,7 +192,7 @@
 .auth-card.style2 .auth-footer {
     margin-top: 1.75rem;
     text-align: center;
-    color: #64748b;
+    color: #516d95;
     font-size: 0.95rem;
 }
 

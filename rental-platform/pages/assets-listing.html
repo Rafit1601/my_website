@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Browse Assets - RentalHub</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/cards.css">
+    <link rel="stylesheet" href="../css/assets-listing.css">
     <link rel="stylesheet" href="../css/animations.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="../js/auth.js"></script>
@@ -32,92 +34,15 @@
     <div class="container-full">
         <div class="listing-wrapper">
             <!-- Sidebar Filters -->
-            <aside class="filters-sidebar slide-in-left">
-                <h3>Filters</h3>
+            
                 
-                <div class="filter-group">
-                    <h4>Asset Type</h4>
-                    <label class="checkbox-label">
-                        <input type="checkbox" checked> Vehicles
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox"> Equipment
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox"> Property
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox"> Event Spaces
-                    </label>
-                </div>
-
-                <div class="filter-group">
-                    <h4>Price Range</h4>
-                    <input type="range" min="10" max="500" value="250" class="price-slider">
-                    <div class="price-display">
-                        <span>$10</span> - <span id="price-value">$250</span> per day
-                    </div>
-                </div>
-
-                <div class="filter-group">
-                    <h4>Rating</h4>
-                    <label class="checkbox-label">
-                        <input type="checkbox"> 5 Stars
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox"> 4+ Stars
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox"> 3+ Stars
-                    </label>
-                </div>
-
-                <div class="filter-group">
-                    <h4>Condition Grade</h4>
-                    <label class="checkbox-label">
-                        <input type="checkbox"> Excellent
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox"> Good
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox"> Fair
-                    </label>
-                </div>
-
-                <div class="filter-group">
-                    <h4>Availability</h4>
-                    <label class="checkbox-label">
-                        <input type="checkbox" checked> Instant Booking
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox"> Request to Book
-                    </label>
-                </div>
-
-                <button class="btn btn-secondary btn-block">Reset Filters</button>
-            </aside>
-
             <!-- Main Listings -->
             <main class="listings-main">
-                <div class="listings-header">
-                    <h1>Available Assets</h1>
-                    <div class="view-controls">
-                        <button class="view-btn active" title="Grid View">
-                            <i class="fas fa-grip"></i>
-                        </button>
-                        <button class="view-btn" title="List View">
-                            <i class="fas fa-list"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Asset Grid -->
                 <div class="assets-grid">
                     <!-- Asset Card 1 -->
                     <div class="asset-card fade-in-up">
                         <div class="asset-image-wrapper">
-                            <div class="asset-image car-image"></div>
+                            <div class="asset-image" style="background-image: url(../image/3.jpg);"></div>
                             <span class="asset-badge">Popular</span>
                             <button class="btn-favorite">
                                 <i class="far fa-heart"></i>
@@ -134,7 +59,7 @@
                             </div>
                             <h3>2024 Tesla Model 3</h3>
                             <p class="asset-location">
-                                <i class="fas fa-map-marker-alt"></i> San Francisco, CA
+                                <i class="fas fa-map-marker-alt"></i> Siem Reap, Cambodia
                             </p>
                             <div class="asset-condition">
                                 <span class="condition-badge excellent">Excellent</span>
@@ -157,7 +82,7 @@
                     <!-- Asset Card 2 -->
                     <div class="asset-card fade-in-up" style="animation-delay: 0.1s;">
                         <div class="asset-image-wrapper">
-                            <div class="asset-image bike-image"></div>
+                            <div class="asset-image" style="background-image: url(../image/2.jpg);"></div>
                             <span class="asset-badge new">New</span>
                             <button class="btn-favorite">
                                 <i class="far fa-heart"></i>
@@ -174,7 +99,7 @@
                             </div>
                             <h3>Mountain Bike Pro</h3>
                             <p class="asset-location">
-                                <i class="fas fa-map-marker-alt"></i> San Francisco, CA
+                                <i class="fas fa-map-marker-alt"></i> Phnom Penh, Cambodia
                             </p>
                             <div class="asset-condition">
                                 <span class="condition-badge excellent">Excellent</span>
@@ -197,7 +122,7 @@
                     <!-- Asset Card 3 -->
                     <div class="asset-card fade-in-up" style="animation-delay: 0.2s;">
                         <div class="asset-image-wrapper">
-                            <div class="asset-image" style="background-image: url(../image/1.jpg);" width="100%" height="70%"></div>
+                            <div class="asset-image" style="background-image: url(../image/1.jpg);"></div>
                             <button class="btn-favorite">
                                 <i class="far fa-heart"></i>
                             </button>
@@ -236,7 +161,7 @@
                     <!-- Asset Card 4 -->
                     <div class="asset-card fade-in-up" style="animation-delay: 0.3s;">
                         <div class="asset-image-wrapper">
-                            <div class="asset-image apartment-image"></div>
+                            <div class="asset-image" style="background-image: url(../image/4.jpg);"></div>
                             <span class="asset-badge popular">Popular</span>
                             <button class="btn-favorite">
                                 <i class="far fa-heart"></i>
@@ -253,7 +178,7 @@
                             </div>
                             <h3>Modern 2BR Apartment</h3>
                             <p class="asset-location">
-                                <i class="fas fa-map-marker-alt"></i> San Francisco, CA
+                                <i class="fas fa-map-marker-alt"></i> Kampot, Cambodia
                             </p>
                             <div class="asset-condition">
                                 <span class="condition-badge excellent">Excellent</span>
@@ -276,7 +201,7 @@
                     <!-- Asset Card 5 -->
                     <div class="asset-card fade-in-up" style="animation-delay: 0.4s;">
                         <div class="asset-image-wrapper">
-                            <div class="asset-image drone-image"></div>
+                            <div class="asset-image" style="background-image: url(../image/5.jpg);"></div>
                             <button class="btn-favorite">
                                 <i class="far fa-heart"></i>
                             </button>
@@ -315,7 +240,7 @@
                     <!-- Asset Card 6 -->
                     <div class="asset-card fade-in-up" style="animation-delay: 0.5s;">
                         <div class="asset-image-wrapper">
-                            <div class="asset-image tool-image"></div>
+                            <div class="asset-image" style="background-image: url(../image/6.jpg);"></div>
                             <button class="btn-favorite">
                                 <i class="far fa-heart"></i>
                             </button>
@@ -331,7 +256,7 @@
                             </div>
                             <h3>Power Tool Set</h3>
                             <p class="asset-location">
-                                <i class="fas fa-map-marker-alt"></i> San Jose, CA
+                                <i class="fas fa-map-marker-alt"></i> Khos Kong, Cambodia
                             </p>
                             <div class="asset-condition">
                                 <span class="condition-badge good">Good</span>
@@ -350,7 +275,122 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="asset-card fade-in-up" style="animation-delay: 0.5s;">
+                        <div class="asset-image-wrapper">
+                            <div class="asset-image" style="background-image: url(../image/6.jpg);"></div>
+                            <button class="btn-favorite">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="asset-content">
+                            <div class="asset-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>(203 reviews)</span>
+                            </div>
+                            <h3>Power Tool Set</h3>
+                            <p class="asset-location">
+                                <i class="fas fa-map-marker-alt"></i> Khos Kong, Cambodia
+                            </p>
+                            <div class="asset-condition">
+                                <span class="condition-badge good">Good</span>
+                            </div>
+                            <p class="asset-description">Complete DeWalt tool collection with drill, saw, and more.</p>
+                            <div class="asset-features">
+                                <span><i class="fas fa-tools"></i> 20 Tools</span>
+                                <span><i class="fas fa-battery-full"></i> Batteries Included</span>
+                            </div>
+                            <div class="asset-footer">
+                                <div class="asset-price">
+                                    <span class="price">$40</span>
+                                    <span class="period">/day</span>
+                                </div>
+                                <a href="booking.html" class="btn btn-primary btn-small">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="asset-card fade-in-up" style="animation-delay: 0.5s;">
+                        <div class="asset-image-wrapper">
+                            <div class="asset-image" style="background-image: url(../image/6.jpg);"></div>
+                            <button class="btn-favorite">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="asset-content">
+                            <div class="asset-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>(203 reviews)</span>
+                            </div>
+                            <h3>Power Tool Set</h3>
+                            <p class="asset-location">
+                                <i class="fas fa-map-marker-alt"></i> Khos Kong, Cambodia
+                            </p>
+                            <div class="asset-condition">
+                                <span class="condition-badge good">Good</span>
+                            </div>
+                            <p class="asset-description">Complete DeWalt tool collection with drill, saw, and more.</p>
+                            <div class="asset-features">
+                                <span><i class="fas fa-tools"></i> 20 Tools</span>
+                                <span><i class="fas fa-battery-full"></i> Batteries Included</span>
+                            </div>
+                            <div class="asset-footer">
+                                <div class="asset-price">
+                                    <span class="price">$40</span>
+                                    <span class="period">/day</span>
+                                </div>
+                                <a href="booking.html" class="btn btn-primary btn-small">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="asset-card fade-in-up" style="animation-delay: 0.5s;">
+                        <div class="asset-image-wrapper">
+                            <div class="asset-image" style="background-image: url(../image/6.jpg);"></div>
+                            <button class="btn-favorite">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="asset-content">
+                            <div class="asset-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>(203 reviews)</span>
+                            </div>
+                            <h3>Power Tool Set</h3>
+                            <p class="asset-location">
+                                <i class="fas fa-map-marker-alt"></i> Khos Kong, Cambodia
+                            </p>
+                            <div class="asset-condition">
+                                <span class="condition-badge good">Good</span>
+                            </div>
+                            <p class="asset-description">Complete DeWalt tool collection with drill, saw, and more.</p>
+                            <div class="asset-features">
+                                <span><i class="fas fa-tools"></i> 20 Tools</span>
+                                <span><i class="fas fa-battery-full"></i> Batteries Included</span>
+                            </div>
+                            <div class="asset-footer">
+                                <div class="asset-price">
+                                    <span class="price">$40</span>
+                                    <span class="period">/day</span>
+                                </div>
+                                <a href="booking.html" class="btn btn-primary btn-small">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div> 
+
+                <!-- Asset Grid -->
+                
 
                 <!-- Pagination -->
                 <div class="pagination">

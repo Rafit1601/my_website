@@ -140,17 +140,100 @@ function handleBookingSubmit(e) {
     submitBtn.textContent = 'Processing...';
     submitBtn.style.opacity = '0.6';
 
-    // Simulate processing
     setTimeout(() => {
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
         submitBtn.style.opacity = '1';
 
         const booking = buildBookingFromForm();
-        saveBookingToLocalStorage(booking);
-        clearBookingDraft();
-        showBookingSuccess(booking);
-    }, 2000);
+        showPaymentModal(booking);
+    }, 1500);
+}
+// ==================== Show Payment Modal ====================
+function showPaymentModal(booking) {
+    const paymentModal = document.createElement('div');
+    paymentModal.className = 'payment-modal';
+    paymentModal.innerHTML = `
+        <div class="payment-content">
+            <span class="close-payment">&times;</span>
+            <h2>Scan QR to Pay</h2>
+            <img src="../image/ABA1.jpg" alt="ABA1" class="payment-qr">
+            <h3>Total Amount: <span id="paymentAmount">${booking.total}</span></h3>
+            <p>Scan this QR code using your bank mobile app to complete payment.</p>
+            <button id="confirmPayment" class="btn btn-primary btn-large">I Have Paid</button>
+        </div>
+    `;
+
+    paymentModal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.65);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 3000;
+        padding: 1rem;
+    `;
+
+    const paymentContent = paymentModal.querySelector('.payment-content');
+    paymentContent.style.cssText = `
+        background: #fff;
+        border-radius: 1rem;
+        padding: 2rem;
+        width: min(520px, 100%);
+        text-align: center;
+        position: relative;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+    `;
+
+    const closePayment = paymentModal.querySelector('.close-payment');
+    closePayment.style.cssText = `
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: #6b7280;
+    `;
+
+    const paymentQr = paymentModal.querySelector('.payment-qr');
+    paymentQr.style.cssText = `
+        width: 220px;
+        max-width: 100%;
+        border-radius: 1rem;
+        margin: 1rem auto;
+        display: block;
+    `;
+
+    const paymentButton = paymentModal.querySelector('#confirmPayment');
+    paymentButton.style.cssText = `
+        margin-top: 1.5rem;
+        width: 100%;
+    `;
+
+    document.body.appendChild(paymentModal);
+
+    closePayment.addEventListener('click', () => paymentModal.remove());
+    paymentModal.addEventListener('click', (e) => {
+        if (e.target === paymentModal) {
+            paymentModal.remove();
+        }
+    });
+
+    paymentButton.addEventListener('click', () => {
+        completeBookingPayment(booking);
+        paymentModal.remove();
+    });
+}
+
+function completeBookingPayment(booking) {
+    saveBookingToLocalStorage(booking);
+    clearBookingDraft();
+    showNotification('Payment sent to bank. Booking confirmed.', 'success');
+    showBookingSuccess(booking);
 }
 
 // ==================== Validate Booking Form ==================== 
@@ -241,8 +324,8 @@ function showBookingSuccess(booking) {
                 </div>
             </div>
             <p class="confirmation-text">A confirmation email has been sent to your email address.</p>
-            <button class="btn btn-primary btn-large" id="view-dashboard-button">
-                View Dashboard
+            <button class="btn btn-primary btn-large" id="view-bookings-button">
+                View My Bookings
             </button>
         </div>
     `;
@@ -303,10 +386,10 @@ function showBookingSuccess(booking) {
 
     document.body.appendChild(successModal);
 
-    const dashboardButton = successModal.querySelector('#view-dashboard-button');
-    if (dashboardButton) {
-        dashboardButton.addEventListener('click', () => {
-            window.location.href = 'dashboard.html';
+    const bookingsButton = successModal.querySelector('#view-bookings-button');
+    if (bookingsButton) {
+        bookingsButton.addEventListener('click', () => {
+            window.location.href = 'profile.html#booking';
         });
     }
 
@@ -317,6 +400,7 @@ function showBookingSuccess(booking) {
         }
     });
 }
+
 
 // ==================== Booking Persistence Helpers ====================
 function getStoredBookings() {
@@ -353,7 +437,7 @@ function buildBookingFromForm() {
     const rentalSubtotal = DAILY_RATE * diffDays;
     const fee = rentalSubtotal * SERVICE_FEE_PERCENT;
     const taxAmount = (rentalSubtotal + fee) * TAX_RATE;
-    const totalDue = rentalSubtotal + fee + taxAmount + DAMAGE_DEPOSIT;
+    const totalDue = rentalSubtotal + fee + taxAmount ;
 
     const currentUser = window.getCurrentUser ? window.getCurrentUser() : null;
     return {
@@ -368,7 +452,6 @@ function buildBookingFromForm() {
         subtotal: formatCurrency(rentalSubtotal),
         serviceFee: formatCurrency(fee),
         taxes: formatCurrency(taxAmount),
-        damageDeposit: formatCurrency(DAMAGE_DEPOSIT),
         total: formatCurrency(totalDue),
         status: 'Confirmed'
     };
@@ -381,21 +464,59 @@ function formatCurrency(value) {
         currency: 'USD'
     }).format(value);
 }
+function showpaymentModal(booking) {
+
+    document.body.appendChild(paymentModal);
+
+    closePayment.addEventListener('click', () => paymentModal.remove());
+
+    paymentModal.addEventListener('click', (e) => {
+        if (e.target === paymentModal) {
+            paymentModal.remove();
+        }
+    });
+
+    // 👇 ដាក់កូដថ្មីនៅទីនេះ
+    paymentButton.addEventListener('click', () => {
+
+        window.location.href = 'abamobile://';
+
+        setTimeout(() => {
+
+            const paid = confirm(
+                'Have you completed payment in ABA Bank?'
+            );
+
+            if (paid) {
+
+                completeBookingPayment(booking);
+
+                paymentModal.remove();
+
+            }
+
+        }, 3000);
+
+    });
+}
+
 
 // ==================== Notification ==================== 
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
+    const iconName = type === 'error' ? 'exclamation-circle' : type === 'success' ? 'check-circle' : 'info-circle';
     notification.innerHTML = `
-        <i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+        <i class="fas fa-${iconName}"></i>
         <span>${message}</span>
     `;
 
+    const backgroundColor = type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#3b82f6';
     notification.style.cssText = `
         position: fixed;
         top: 120px;
         right: 20px;
-        background: ${type === 'error' ? '#ef4444' : '#3b82f6'};
+        background: ${backgroundColor};
         color: white;
         padding: 1rem 1.5rem;
         border-radius: 0.5rem;

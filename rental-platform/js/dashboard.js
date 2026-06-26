@@ -10,7 +10,6 @@ const bookingSearchInput = document.getElementById('booking-search-input');
 const recentBookingsList = document.getElementById('recent-bookings-list');
 const activeBookingsCount = document.getElementById('active-bookings-count');
 const earningsThisMonth = document.getElementById('earnings-this-month');
-const depositsHeld = document.getElementById('deposits-held');
 const dashboardSidebar = document.querySelector('.dashboard-sidebar');
 let currentDashboardUser = null;
 
@@ -18,11 +17,6 @@ let currentDashboardUser = null;
 document.addEventListener('DOMContentLoaded', function() {
     const currentUser = window.requireAuth ? window.requireAuth() : null;
     if (!currentUser) return;
-
-    if (currentUser.role !== 'admin') {
-        window.location.href = window.location.pathname.includes('/pages/') ? '../index.html' : 'index.html';
-        return;
-    }
 
     currentDashboardUser = currentUser;
     console.log('Dashboard Page Loaded');
@@ -59,12 +53,17 @@ function handleBookingSearchInput(e) {
 
 // ==================== Handle Section Navigation ==================== 
 function handleSectionNavigation(e) {
-    e.preventDefault();
-
     const href = this.getAttribute('href');
-    const targetSection = document.querySelector(href);
+    if (!href || !href.startsWith('#')) {
+        return; // allow navigation to separate pages
+    }
 
-    if (!targetSection) return;
+    const targetSection = document.querySelector(href);
+    if (!targetSection) {
+        return;
+    }
+
+    e.preventDefault();
 
     // Remove active class from all links and sections
     sidebarLinks.forEach(link => link.classList.remove('active'));
